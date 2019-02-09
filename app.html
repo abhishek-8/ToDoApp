@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=yes" />
+        <title>ToDoApp</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href = "app.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body ng-app="myApp" ng-controller="myCtrl">
+        <h3 class = "center"> My ToDo App</h3>
+        
+        <div class="container">
+            <form ng-submit="add()" class = "card-panel">
+                <input type="text" name = "subject" ng-model="formData.subject" placeholder="Subject">
+                <input type="text" name = "detail" ng-model="formData.detail" placeholder="Detail">
+                <center><input class = "btn-large" type="submit"></center>
+            </form>
+            <table>
+                <tr>
+                    <th>Task ID</th>
+                    <th>Subject</th>
+                    <th>Detail</th>
+                    <th class="center" colspan=2>Actions</th>
+                </tr>
+                <tr class = "card-panel" ng-repeat = "task in taskArray">
+                    <td>{{ task.id }}</td>
+                    <td class="{{task.id}} fxd">{{ task.subject }}</td>
+                    <td class="{{task.id}} fxd">{{ task.detail }}</td>
+                    
+                    <td class="hidden xx{{task.id}} fxd" ><input type="text" ng-model="formData1.subject" value={{task.subject}}></td>
+                    <td class="hidden xx{{task.id}} fxd"><input type="text" ng-model="formData1.detail" value={{task.detail}}></td>
+                    
+                    <td class = "{{task.id}}"><button class = "btn" ng-click="edit(task.id)">Edit</button></td>
+                    <td class = "hidden xx{{task.id}}"><button class = "btn" ng-click="done(task.id)">Done</button></td>
+                    <td><button class = "btn red" ng-click="delete(task.id)">Delete</button></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
