@@ -35,7 +35,7 @@
                     <td class="hidden xx{{task.id}} fxd"><input type="text" ng-model="formData1.detail" value={{task.detail}}></td>
                     
                     <td class = "{{task.id}}"><button class = "btn" ng-click="edit(task.id)">Edit</button></td>
-                    <td class = "hidden xx{{task.id}}"><button class = "btn" ng-click="done(task.id)">Done</button></td>
+                    <td class = "hidden xx{{task.id}}"><button class = "btn green" ng-click="done(task.id)">Done</button></td>
                     <td><button class = "btn red" ng-click="delete(task.id)">Delete</button></td>
                 </tr>
             </table>

@@ -8,5 +8,8 @@ body{
 	display: none;
 }
 .fxd {
-	width: 225px;
+	width: 200px;
+}
+tr {
+	border: 1px solid;
 }
