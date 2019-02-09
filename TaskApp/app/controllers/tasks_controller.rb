@@ -5,8 +5,6 @@ class TasksController < ApplicationController
 	end
 
 	def show
-		@task = Task.find(params[:id])
-		render json: @task
 	end
 
 	def new
@@ -23,7 +21,7 @@ class TasksController < ApplicationController
 		@task.subject = params[:subject]
 		@task.detail = params[:detail]
 		@task.save
-		redirect_to tasks_path
+		render json: @task
 	end
 	
 	def destroy

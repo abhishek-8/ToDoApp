@@ -10,14 +10,6 @@ app.factory('myFctry', function($http) {
 		})
 	}
 
-	factory.get = function(id) {
-		path = "http://localhost:3000/tasks/" + id
-		return $http({
-	    	method : 'GET',
-	    	url : path
-		})
-	}
-
 	factory.add = function(params) {
 		return $http({
 	    	method : 'POST',
@@ -53,18 +45,14 @@ app.controller('myCtrl', function($scope, myFctry) {
 
   	$scope.taskArray = [];
   	$scope.formData = {};
-  	$scope.formData1 = {};
-  	$scope.flag = 0;
 
 	myFctry.getAll().then(function success(response) {
-		$scope.flag = 0;
 	    $scope.taskArray = response.data;
 	}, function error(response) {
 	    $scope.taskArray = response.statusText;
 	});
 	
   	$scope.add = function() {
-  		$scope.flag = 0;
   		myFctry.add($.param($scope.formData)).then(function success(response) {
 		    $scope.taskArray = response.data;
 		}, function error(response) {
@@ -73,7 +61,6 @@ app.controller('myCtrl', function($scope, myFctry) {
 	}
 
 	$scope.delete = function(id) {
-		$scope.flag = 0;
 		myFctry.delete(id).then(function success(response) {
 		    $scope.taskArray = response.data;
 		}, function error(response) {
@@ -81,30 +68,21 @@ app.controller('myCtrl', function($scope, myFctry) {
 		});
 	}
 
-	$scope.edit = function(id) {
-		if( $scope.flag == 0 ) {
-			$scope.flag = 1;
-			myFctry.get(id).then(function success(response) {
-			    $scope.formData1 = response.data;
-			}, function error(response) {
-			    $scope.formData1 = response.statusText;
-			});
-			$("."+id).hide();
-			$(".xx"+id).show();
-		}
+	$scope.edit = function(index) {
+		id = $scope.taskArray[index].id;
+		$("."+id).hide();
+		$(".xx"+id).show();
 	}
 
-	$scope.done = function(id) {
-		$scope.flag = 0;
+	$scope.done = function(index) {
+		id = $scope.taskArray[index].id;
 		$("."+id).show();
 		$(".xx"+id).hide();
 
-		myFctry.edit(id, $.param($scope.formData1)).then(function success(response) {
-		    $scope.taskArray = response.data;
+		myFctry.edit(id, $.param($scope.taskArray[index])).then(function success(response) {
+		    $scope.taskArray[index] = response.data;
 		}, function error(response) {
-		    $scope.taskArray = response.statusText;
+		    $scope.taskArray[index] = response.statusText;
 		});
-		$scope.formData1.subject = "";
-		$scope.formData1.detail = "";
 	}
 });
